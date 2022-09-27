@@ -1,0 +1,50 @@
+######## HOW TO INSTALL KUBELET KUBEADM OR SETUP KUBERNETES CLUSTER ##############
+#MASTERNODE CONFIGRUATION ----> 2CORE CPU 2GB RAM 
+#WORKERNODE CONFIGRUATION -----> 1CPU 1GB RAM ENOUGH
+SOLUTION >>
+
+
+1   vim /etc/hosts                                > ip name entry resolve
+2   hostnamectl set-hostname master.com
+3   swapoff -a                                    >  swap memory off
+4   yum install -y yum-utils
+5   yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo
+6   cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
+7   setenforce 0
+8   sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+9   getenforce
+10  yum install -y kubelet kubeadm docker-ce --disableexcludes=kubernetes
+11  systemctl enable --now docker
+12  docker info                                   > to check cgroupdriver and have to change with systemd in kubernetes case
+13  vim /etc/docker/daemon.json
+     {
+  "exec-opts": ["native.cgroupdriver=systemd"]
+} 
+
+14  systemctl daemon-reload
+15  systemctl restart docker
+16  docker info
+17  systemctl restart kubelet
+18  systemctl status kubelet
+19  kubeadm --help
+20  rm -f /etc/containerd/config.toml              > have to remove this file escape from error comes in kubeadm init
+21  systemctl restart containerd
+22  kubeadm init
+23  mkdir .kube
+24  cp -r /etc/kubernetes/admin.conf .kube/config
+25  kubectl get nodes
+26  kubectl get pods -n kube-system
+27  kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+28  kubectl get nodes
+29  kubeadm token list
+30  kubeadm token create --print-join-command
+31  kubeadm token create --print-join-command --help

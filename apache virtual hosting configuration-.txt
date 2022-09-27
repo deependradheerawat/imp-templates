@@ -1,0 +1,22 @@
+FOR VIRTUAL WEB HOSTING CONFIGURATION OF [ /etc/httpd/conf.d/<filename>.conf]
+FIRST WEB
+<VirtualHost *:80>
+  DocumentRoot /var/www/killvish
+  ServerName www.killvish.com
+  DirectoryIndex index.html
+</VirtualHost>
+
+SECOND WEB
+<VirtualHost *:80>
+  DocumentRoot /var/www/shaktiman
+  ServerName www.shaktiman.com
+  DirectoryIndex index.html
+</VirtualHost>
+
+
+THIRD WEB
+<VirtualHost *:80>
+  DocumentRoot /var/www/gangadhar
+  ServerName www.gangadhar.com
+  DirectoryIndex index.html
+</VirtualHost>

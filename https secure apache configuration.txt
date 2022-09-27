@@ -1,0 +1,26 @@
+#####HOST A SECURE WEBSITE ON APACHE ON YOUR LOCALHOST#####
+#NAME OF WEBSITE > www.practical.com
+SOLUTION >
+1 # yum -y install httpd
+2 # yum install -y mod_ssl
+3 # vim /etc/hosts
+    > ip/machine  www.practical.com
+4 # mkdir /var/www/practical
+5 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/tls/private/ps.key -out /etc/pki/tls/certs/ps.crt
+     it will take input from you like-
+   > comman name: practical.com
+6 # firewall-cmd --add-service=https --permenent
+7 # firewall-cmd --reload
+8 # vim /etc/httpd/conf.d/practical.conf
+    <VirtualHost *:443>
+        SSLEngine on
+        SSLCertificateFile /etc/pki/tls/certs/ps.crt
+        SSLCertificateKeyFile /etc/pki/tls/certs/ps.key
+        ServerName www.practical.com
+        DocumentRoot /var/www/practical/
+        ErrorLog /var/log/httpd/practical.com-error_log
+        CustomLog /var/log/httpd/practical.com-access_log common
+    </VirtualHost>
+    :wq!
+9 # systemctl restart httpd
+ Open up your browser, type https://practical.com, and you

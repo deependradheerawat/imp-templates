@@ -1,0 +1,49 @@
+#HOW TO CONNECT WORDPRESS TO DATABASE IN LINUX CENTOS8 #
+
+* yum install httpd
+* yum install mariadb*
+1 dnf install php-mysqlnd php-fpm mariadb-server httpd tar curl php-json
+2 mysql_secure_installation 
+
+3  mysql -u root -p
+  > create database name_database;
+  > create user username@'localhost' identified by 'password';
+  > grant all privileges on name_database.* for username@'localhost';
+  > flush privileges;
+  > quit;
+
+4  systemctl restart mariadb.service 
+5  cd /var/www/
+6  ll
+7  wget https://wordpress.org/latest.tar.gz
+8  ll
+9  tar -xzf latest.tar.gz 
+10  ll
+11  rm -fv latest.tar.gz 
+12  chown -Rf apache:apache /var/www/
+13  semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/wordpress(/.*)?"
+14  semanage fcontext -l | grep httpd_sys_rw_content_t|grep "\/var\/www\/wordpress"
+15  setsebool -P httpd_can_network_connect on
+16  vim /etc/httpd/conf.d/wordpress.conf 
+
+  <VirtualHost *:80>
+  ServerAdmin root@localhost
+  DocumentRoot /var/www/wordpress
+        <Directory "/var/www/wordpress">
+                Options Indexes FollowSymLinks
+                AllowOverride all
+                Require all granted
+        </Directory>
+  ErrorLog /var/log/httpd/wordpress_error.log
+  CustomLog /var/log/httpd/wordpress_access.log common
+  </VirtualHost>
+  >:wq!
+
+17  systemctl restart httpd
+18  ip a s
+#copy ip address and paste in browser
+#then copy the php text and create a file inside wordpress
+
+19 cd wordpress/
+20 vim wp-config.php
+21 chown apache:apache wp-config.php

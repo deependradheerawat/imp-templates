@@ -1,0 +1,38 @@
+## TO RUN A COMPLETE WORDPRESS BLOG AND MYSQL DATABASE SERVER ON DOCKER CONTAINERS RUNNING ON DOCKER LINUX HOST ##
+
+#SOLUTION>
+
+STEP 1 > pull mysql and wordpress image from docker.io with latest tag
+>> docker pull mysql
+>> docker pull wordpress
+
+- create a mysql database container 
+- it is must to set the password to get mysql started
+
+STEP 2 > launch container named mysql by image mysql using mysql_root_password=a
+>> docker run -d --name=mysql -e MYSQL_ROOT_PASSWORD=a -e MYSQL_DATABASE=wordpress mysql
+
+- create wordpress container
+--now that our database server is up and running we will create my wordpress application container with all the mysql details
+
+STEP 3 > 
+>> docker run -d --name=wordpress --link=mysql -p 8081:80 -e WORDPRESS_DB_HOST=mysqlconatinerip:3306 -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=a -e WORDPRESS_DB_NAME=wordpress -e WORDPRESS_TABLE_PREFIX=wp_ -d wordpress
+
+- deployment is done now configure wordpress
+
+STEP 4 >
+- go to the web browser
+- go to url and type http://host_ip:8081
+
+- now here you will see wordpress
+ -> now select english(united states)
+ -> All we need to do now, Is settings up Site Title and Password
+ -> enter site title (rovisan) and password by default set and set username (admin)
+ enter mail id (name@rovisan.com)
+ ->now click on install wordpress
+ -> now click on login
+ -> enter your seted username and password
+/////////////////////////////////////////////////////////////////////////
+our wordpress is finally setup with mysql
+assignment done
+

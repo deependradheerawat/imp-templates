@@ -1,0 +1,52 @@
+---
+- hosts: prod
+  tasks:
+          - name: install nfs-utils package
+            yum:
+                    name: nfs-utils
+                    state: present
+
+          - name: started the service nfs-utils
+            ansible.builtin.service:
+                    name: nfs-utils
+                    state: started
+                    enabled: yes
+          - name: create a directory
+            ansible.builtin.file:
+                    path: /data
+                    state: directory
+                    mode: 0755
+          - name: mount /database in /data
+            ansible.posix.mount:
+                    src: 172.31.91.229:/webdata
+                    path: /data
+                    opts: rw,sync,hard,intr
+                    state: mounted
+                    fstype: nfs
+          - name: add repository of  docker
+            ansible.builtin.copy:
+                    src: /etc/yum.repos.d/docker-ce.repo
+                    dest: /etc/yum.repos.d/docker-ce.repo
+                    mode: 0644
+          - name: install docker
+            yum:
+                    name: docker-ce
+                    state: present
+
+          - name: started the service docker
+            ansible.builtin.service:
+                    name: docker
+                    state: started
+                    enabled: yes
+          - name: pull images nginx
+            community.docker.docker_image:
+                    name: nginx
+                    source: pull
+
+          - name: Create a data container
+            docker_container:
+                    name: con1
+                    image: nginx
+                    volumes: /data:/usr/share/nginx/html/
+
+                    published_ports: "8080:80"

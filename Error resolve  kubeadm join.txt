@@ -1,0 +1,25 @@
+#### ERRORS IN KUBERNETES CLUSTER KUBEADM JOIN ###
+
+
+dnf install -y iproute-tc
+
+
+
+
+yum -y install ipvsadm
+
+ipvsadm --clear
+
+
+
+kubeadm reset
+
+rm -rf /etc/cni/usetab
+rm -rf /etc/kubernets/pki/ca.crt
+rm -rf /etc/kubernets/kubelet.config
+rn -rf /etc/containerd/*
+systemctl restart conatinerd
+systemctl restart docker
+systemctl restar kubelet
+then run
+kubeadm join --with token

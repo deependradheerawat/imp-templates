@@ -1,0 +1,25 @@
+#HOW TO CONFIGURE LOADBLANCER IN LINUX CENTOS8 #
+
+1  yum -y install haproxy
+2  systemctl restart haproxy
+3  vim /etc/haproxy/haproxy.cfg
+  # main frontend which proxys to the backends
+  frontend http_balancer
+    bind *:80
+    option http-server-close
+    option forwardfor
+    stats uri /haproxy?stats
+
+    default_backend     apache_webservers
+
+  backend apache_webservers                                                 [apache-node01]                      [apache-node02]
+    mode        http                                                        vim /var/www/html/index.html           vim /var/www/html/index.html
+    balance     roundrobin                                                   systemctl restart httpd               systemctl restart httpd
+    option httpchk HEAD / HTTP/1.1\r\nHost:\ localhost                       ip a s                                 ip a s
+    server  apache-node01  ip:80  check                                    #put these ip in loadblancer machine configration file backend apache_webservers
+    server  apache-node02  ip:80  check
+ :wq!
+     
+4  systemctl restart haproxy.service
+5  ip address show
+#copy the ip address and paste in the browser you get info of apache-node01 and refresh you get info of node-2
