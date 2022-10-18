@@ -1,0 +1,49 @@
+1. What command is used to remove files?
+
+2. Which command is show system information ?
+
+3. If you are login with harry user than which command is used to change password ?
+
+4. Which command is used to check where the user is working ?
+
+5. What command is used to check memory  ?
+
+6. You have to create a directory techno/ec/el/second/third how you will create this directory ? 
+
+7. How to create file and directory both from single command ?
+
+8. Write a command to add user kuldeep  with fingerprint info or Gecos field entry " Salesforce Engineer".
+
+9. What is the value of Umask for Root user ?
+
+10. What is the default permission of file for Regular user or Normal user ?
+
+11. Create a collaborative directory "/common/admin" and change group ownership to kuldeep and give read write excute permission ?
+
+12. Find the files in your system which is owned by kuldeep user ?
+
+13. By which command we can search pattern or string in our database ?
+
+14. From which command we can search location of files and directory ?
+
+15. Find files which have size > 10m ?
+
+16. What command we can use to list password ageing policies on user ?
+
+17. What is UID of root user ?
+
+18. What is the command to check file type ?
+
+19. How to Change  Hostname to "controlnode" ?
+
+20. How we can check permission of "passwd and shadow file" ?
+
+21. What is SUID , SGID and STICKY BIT, ?
+
+22. What command we can use to lock the user account ?
+
+23. Write a command to add group "sysadmin" ?
+
+24. What command we can use to rename a file ?
+
+25. Write a command to copy /etc/fstab to /var/tmp.?

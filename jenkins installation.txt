@@ -1,0 +1,24 @@
+###### JENKINS INSTALLATION ON RHEL8 #######
+
+STEP-1
+#Install java 
+
+>>  yum install java-11-openjdk-devel
+>>  java -version
+>>  update-alternatives --config java
+
+STEP-2
+#Add Repo
+
+>> wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+>> rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+
+STEP-3
+#Install Jenkins
+
+>> yum -y install jenkins
+
+#Then start service
+
+>> systemctl start jenkins.service
